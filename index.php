@@ -48,7 +48,7 @@ if (isset ($_REQUEST['method'])) {
 		//header("Content-Type = 'application/json;charset=UTF-8'");
 		header('Content-type: text/json ;charset=UTF-8');
 		$method = $_REQUEST['method'];
-		//$client_ip = getIp();
+		
 		if ('addUser' == $method) {
 			if(nea(array("args","args2"))){
 				$name = gk("args");
@@ -205,69 +205,18 @@ if (isset ($_REQUEST['method'])) {
 				echo json_encode($array);
 			}
 		}
+		elseif ('loadByRegion' == $method) {
+			if(nea(array("args"))){
+				$client_ip = getIp();
+				
+				$regionId = gk("args");
+				$array = loadByRegion($regionId,$client_ip);
+				echo urldecode(json_encode($array));
+			}
+		}
 		//$array = loadByRegion("8f72e2f30b26604e25082ce0d32f36cfddf8", getIP());
 		//echo indent(json_encode($array, true));
 	} catch (Exception $e) {
-		
 		die(json_encode(array("code"=>0,"msg"=>'ERROR: Can\'t connect to Redis')));
 	}
-}
-
-/**
- * 格式化输出json数据
- * @param  $json 待输出数据
- * @return json格式化后的数据
- */
-function prettyPrint( $json )
-{
-    $result = '';
-    $level = 0;
-    $prev_char = '';
-    $in_quotes = false;
-    $ends_line_level = NULL;
-    $json_length = strlen( $json );
-
-    for( $i = 0; $i < $json_length; $i++ ) {
-        $char = $json[$i];
-        $new_line_level = NULL;
-        $post = "";
-        if( $ends_line_level !== NULL ) {
-            $new_line_level = $ends_line_level;
-            $ends_line_level = NULL;
-        }
-        if( $char === '"' && $prev_char != '\\' ) {
-            $in_quotes = !$in_quotes;
-        } else if( ! $in_quotes ) {
-            switch( $char ) {
-                case '}': case ']':
-                    $level--;
-                    $ends_line_level = NULL;
-                    $new_line_level = $level;
-                    break;
-
-                case '{': case '[':
-                    $level++;
-                case ',':
-                    $ends_line_level = $level;
-                    break;
-
-                case ':':
-                    $post = " ";
-                    break;
-
-                case " ": case "\t": case "\n": case "\r":
-                    $char = "";
-                    $ends_line_level = $new_line_level;
-                    $new_line_level = NULL;
-                    break;
-            }
-        }
-        if( $new_line_level !== NULL ) {
-            $result .= "\n".str_repeat( "    ", $new_line_level );
-        }
-        $result .= $char.$post;
-        $prev_char = $char;
-    }
-
-    return $result;
 }

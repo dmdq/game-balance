@@ -7,6 +7,7 @@ $config = array(
       'name' => '192.168.1.188', // Optional name.
       'host' => '192.168.1.188',
       'port' => 6379,
+//      'auth' => 'lion',
       'filter' => '*'
 
       // Optional Redis authentication.

@@ -355,7 +355,9 @@ function add(obj){
 				return;
 			}
 			$.get("./?method=addApp&args="+userName+"&args2="+name+"&args3="+order+"&args4="+forbidden_type+"&args5="+forbidden_value,function(data){
-				data = eval("("+data+")");
+				if(typeof(data)!='object'){
+					data = eval("("+data+")");
+				}
 				var code = data.code;
 				if(msgcode(code)==1){
 					var item_data = {
@@ -378,7 +380,9 @@ function add(obj){
 				return;
 			}
 			$.get("./?method=addRegion&args="+parent_uuid+"&args2="+name+"&args3="+order+"&args4="+forbidden_type+"&args5="+forbidden_value,function(data){
-				data = eval("("+data+")");
+				if(typeof(data)!='object'){
+					data = eval("("+data+")");
+				}
 				var code = data.code;
 				if(msgcode(code)==1){
 					var item_data = {
@@ -407,7 +411,9 @@ function add(obj){
 				return;
 			}
 			$.get("./?method=addServer&args="+parent_uuid+"&args2="+name+"&args3="+version+"&args4="+order+"&args5="+forbidden_type+"&args6="+forbidden_value,function(data){
-				data = eval("("+data+")");
+				if(typeof(data)!='object'){
+					data = eval("("+data+")");
+				}
 				var code = data.code;
 				if(msgcode(code)==1){
 					var item_data = {
@@ -450,7 +456,9 @@ function drop(obj){
 			var place_uuid = place_app.attr("hash");
 			var userName =$.trim($("#welcome_user").html());
 			$.get("./?method=removeApp&args="+userName+"&args2="+uuid,function(data){
-				data = eval("("+data+")");
+				if(typeof(data)!='object'){
+					data = eval("("+data+")");
+				}
 				var code = data.code;
 				if(1==msgcode(code)){
 					if(uuid==place_uuid){
@@ -481,7 +489,9 @@ function drop(obj){
 			
 			var appId = $.trim(place_app.attr("hash"));
 			$.get("./?method=removeRegion&args="+appId+"&args2="+uuid,function(data){
-				data = eval("("+data+")");
+				if(typeof(data)!='object'){
+					data = eval("("+data+")");
+				}
 				var code = data.code;
 				if(1==msgcode(code)){
 					if(uuid==place_uuid){
@@ -505,7 +515,9 @@ function drop(obj){
 			var place_uuid = place_server.attr("hash");
 			var regionId = $.trim(place_region.attr("hash"));
 			$.get("./?method=removeServer&args="+regionId+"&args2="+uuid,function(data){
-				data = eval("("+data+")");
+				if(typeof(data)!='object'){
+					data = eval("("+data+")");
+				}
 				var code = data.code;
 				if(1==msgcode(code)){
 					if(uuid==place_uuid){
@@ -523,7 +535,9 @@ function drop(obj){
 			uuid = object.parent().parent().find(".uuid").html();
 			var place_uuid = place_server.attr("hash");
 			$.get("./?method=removeProcess&args="+place_uuid+"&args2="+uuid,function(data){
-				data = eval("("+data+")");
+				if(typeof(data)!='object'){
+					data = eval("("+data+")");
+				}
 				var code = data.code;
 				if(1==msgcode(code)){
 					object.parent().parent().remove();
@@ -599,13 +613,17 @@ function update(obj){
 		if(ownerId=="apps"){
 			var userName = $.trim($("#welcome_user").html());
 			$.get("./?method=updateApp&args="+userName+"&args2="+uuid+"&args3="+name+"&args4="+order,function(data){
-				data = eval("("+data+")");
+				if(typeof(data)!='object'){
+					data = eval("("+data+")");
+				}
 				msgcode(data.code);
 			});
 		}else if(ownerId=="regions"){
 			var parentId = $.trim($("#place_app").attr("hash"));
 			$.get("./?method=updateRegion&args="+parentId+"&args2="+uuid+"&args3="+name+"&args4="+order+"&args5="+forbidden_type+"&args6="+forbidden_value,function(data){
-				data = eval("("+data+")");
+				if(typeof(data)!='object'){
+					data = eval("("+data+")");
+				}
 				msgcode(data.code);
 			});
 		}else if(ownerId=="servers"){
@@ -625,7 +643,9 @@ function update(obj){
 			}
 			var parentId = $.trim($("#place_region").attr("hash"));
 			$.get("./?method=updateServer&args="+parentId+"&args2="+uuid+"&args3="+name+"&args4="+order+"&args5="+forbidden_type+"&args6="+forbidden_value+"&args7="+version+"&args8="+status,function(data){
-				data = eval("("+data+")");
+				if(typeof(data)!='object'){
+					data = eval("("+data+")");
+				}
 				msgcode(data.code);
 			});
 		}
@@ -740,7 +760,9 @@ function update_process(obj){
 	});
 	if(flag){
 		$.get("./?method=updateProcess&args="+serverId+"&args2="+uuid+"&args3="+jsonObject,function(data){
-			data = eval("("+data+")");
+			if(typeof(data)!='object'){
+				data = eval("("+data+")");
+			}
 			msgcode(data.code);
 		});
 	}
@@ -757,7 +779,9 @@ function load_processes(id){
 	}
 	$("#process ul li[lang!='keep']").remove();
 	$.get("./?method=loadProcesses&args="+id,function(data){
-			data = eval("("+data+")");
+			if(typeof(data)!='object'){
+				data = eval("("+data+")");
+			}
 			var list =data;
 			var html = "";
 			for(var index in list){
@@ -952,7 +976,9 @@ function add_app(){
 		return;
 	}
 	$.get("./?method=addApp&args="+userName+"&args2="+newAppName,function(data){
-		data = eval("("+data+")");
+		if(typeof(data)!='object'){
+			data = eval("("+data+")");
+		}
 		var code = data.code;
 		msgcode(code);
 		if(code==1){
@@ -978,7 +1004,9 @@ function add_region(){
 		return;
 	}
 	$.get("./?method=addRegion&args="+fromAppId+"&args2="+newRegionName,function(data){
-		data = eval("("+data+")");
+		if(typeof(data)!='object'){
+			data = eval("("+data+")");
+		}
 		var code = data.code;
 		msgcode(code);
 		if(code==1){
@@ -1004,7 +1032,9 @@ function add_server(){
 		return;
 	}
 	$.get("./?method=addServer&args="+fromId+"&args2="+newName+"&args3=v1.0.0",function(data){
-		data = eval("("+data+")");
+		if(typeof(data)!='object'){
+			data = eval("("+data+")");
+		}
 		var code = data.code;
 		msgcode(code);
 		if(code==1){
@@ -1146,7 +1176,9 @@ function load_app(){
 		return;
 	}
 	$.get("./?method=loadApps&args="+userName,function(data){
-		data = eval("("+data+")");
+		if(typeof(data)!='object'){
+			data = eval("("+data+")");
+		}
 		var list = data;
 			$("#regions ul li[class!='frist']").remove();
 			$("#servers ul li[class!='frist']").remove();
@@ -1167,7 +1199,9 @@ function load_regions(appId){
 		return;
 	}
 	$.get("./?method=loadRegions&args="+appId,function(data){
-		data = eval("("+data+")");
+		if(typeof(data)!='object'){
+			data = eval("("+data+")");
+		}
 		var list = data;
 			$("#regions ul li[class!='frist']").remove();
 			$("#servers ul li[class!='frist']").remove();
@@ -1195,7 +1229,9 @@ function load_servers(id){
 		return;
 	}
 	$.get("./?method=loadServers&args="+id,function(data){
-		data = eval("("+data+")");
+			if(typeof(data)!='object'){
+				data = eval("("+data+")");
+			}
 			var list = data;
 			$("#servers ul li[class!='frist']").remove();
 			$("#process ul li[lang!='keep']").remove();
@@ -1341,7 +1377,9 @@ function add_process(){
 	
 	if(success){
 		$.get("./?method=addProcess&args="+parent_uuid+"&args2=&args3="+order+"&args4="+host+"&args5="+port+"&args6="+usedMemory+"&args7="+online,function(data){
-			data = eval("("+data+")");
+			if(typeof(data)!='object'){
+				data = eval("("+data+")");
+			}
 			if(msgcode(data.code)==1){
 				var uuid = data.id;
 				var html = "";
@@ -1377,7 +1415,9 @@ function connect(obj){
 	var port = $.trim($(object.parent().prev().prev().prev()).html());
 	
 	$.get("./?method=connect&args="+host+"&args2="+port,function(data){
-		data = eval("("+data+")");
+		if(typeof(data)!='object'){
+			data = eval("("+data+")");
+		}
 		var code = data.code;
 		if(code==1){
 			msgbox(data.msg);
