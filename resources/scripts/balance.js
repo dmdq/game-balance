@@ -1061,6 +1061,14 @@ function browse(obj){
 		
 	}else if(ownerId=="regions"){
 		url = "./?method=loadByRegion&args="+uuid;
+		//cache region
+		$.get("./?method=cacheRegion&args="+uuid,function(data){
+			var result = data;
+			if(typeof(data)=='object'){
+				result =JSON.stringify(data);
+			}
+			console.log("cache region:"+uuid+" ,back: "+ result)
+		});
 	}else if(ownerId=="servers"){
 		url = "./?method=loadByServer&args="+uuid;
 	}

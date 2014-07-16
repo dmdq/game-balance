@@ -1,31 +1,8 @@
 <?php
-define('CONFIG_USER', 'config:user:');
-
-define('CHILDREN_USER', 'children:user:');
-
-define('CONFIG_APP', 'config:app:');
-
-define('CHILDREN_APP', 'children:app:');
-
-define('CONFIG_REGION', 'config:region:');
-
-define('CHILDREN_REGION', 'children:region:');
-
-define('CONFIG_SERVER', 'config:server:');
-
-define('CHILDREN_SERVER', 'children:server:');
-
-define('CONFIG_PROCESS', 'config:process:');
+require_once(dirname(__FILE__).'/config.inc.php');
 
 /**
  * 添加用户
- * 
- * @param userName
- *            用户名
- * @param password
- *            密码
- * @param chmod
- *            权限
  */
 function addUser($userName, $password, $chmod) {
 	global $config, $server, $redis;
@@ -55,17 +32,17 @@ function addUser($userName, $password, $chmod) {
 /**
  * 添加应用
  */
-function addApp($userName, $appName, $order, $forbiddenType, $forbiddenValue) {
+function addApp($userName, $appName, $order, $forbiddenType, $forbiddenValue, $id = null) {
 	global $config, $server, $redis;
 	$code = 1;
 	$map = array ();
-	$uuid = get_uuid();
+	$uuid = $id != null ? $id : get_uuid();
 	$existsUser = $redis->exists(CONFIG_USER . $userName);
 	if (!$existsUser) {
 		$code = 1004;
 	} else {
 		$key = CONFIG_APP . $uuid;
-		if(!$redis->exists($key)){
+		if (!$redis->exists($key)) {
 			$redis->rpush(CHILDREN_USER . $userName, $uuid);
 			$config = array ();
 			$config["id"] = $uuid;
@@ -76,7 +53,7 @@ function addApp($userName, $appName, $order, $forbiddenType, $forbiddenValue) {
 			$config["parent"] = $userName;
 			$redis->hmset($key, $config);
 			$map["id"] = $uuid;
-		}else{
+		} else {
 			$code = 0;
 		}
 	}
@@ -84,13 +61,16 @@ function addApp($userName, $appName, $order, $forbiddenType, $forbiddenValue) {
 	return $map;
 }
 
-function addRegion($appId, $regionName, $order, $forbiddenType, $forbiddenValue) {
+/**
+ * 添加分区
+ */
+function addRegion($appId, $regionName, $order, $forbiddenType, $forbiddenValue,$id=null) {
 	global $config, $server, $redis;
 	$code = 1;
 	$map = array ();
-	$uuid = get_uuid();
+	$uuid = $id != null ? $id : get_uuid();
 	$key = CONFIG_REGION . $uuid;
-	if(!$redis->exists($key)){
+	if (!$redis->exists($key)) {
 		$redis->rpush(CHILDREN_APP . $appId, $uuid);
 		$config = array ();
 		$config["id"] = $uuid;
@@ -101,20 +81,23 @@ function addRegion($appId, $regionName, $order, $forbiddenType, $forbiddenValue)
 		$config["parent"] = $appId;
 		$redis->hmset($key, $config);
 		$map["id"] = $uuid;
-	}else{
+	} else {
 		$code = 0;
 	}
 	$map["code"] = $code;
 	return $map;
 }
 
-function addServer($regionId, $serverName, $version, $order, $forbiddenType, $forbiddenValue) {
+/**
+ * 添加服务器
+ */
+function addServer($regionId, $serverName, $version, $order, $forbiddenType, $forbiddenValue,$id=null) {
 	global $config, $server, $redis;
 	$code = 1;
 	$map = array ();
-	$uuid = get_uuid();
+	$uuid = $id != null ? $id : get_uuid();
 	$key = CONFIG_SERVER . $uuid;
-	if(!$redis->exists($key)){
+	if (!$redis->exists($key)) {
 		$redis->rpush(CHILDREN_REGION . $regionId, $uuid);
 		$data = array ();
 		$data["id"] = $uuid;
@@ -127,7 +110,7 @@ function addServer($regionId, $serverName, $version, $order, $forbiddenType, $fo
 		$data["parent"] = $regionId;
 		$redis->hmset($key, $data);
 		$map["id"] = $uuid;
-	}else{
+	} else {
 		$code = 0;
 	}
 	$map["code"] = $code;
@@ -135,7 +118,7 @@ function addServer($regionId, $serverName, $version, $order, $forbiddenType, $fo
 }
 
 /**
- * {@inheritDoc}
+ * 添加进程
  */
 function addProcess($serverId, $processId, $order, $host, $port, $usedMemory, $online) {
 	global $config, $server, $redis;
@@ -183,7 +166,7 @@ function addProcess($serverId, $processId, $order, $host, $port, $usedMemory, $o
 }
 
 /**
- * {@inheritDoc}
+ * 移除应用
  */
 function removeApp($userName, $appId) {
 	global $config, $server, $redis;
@@ -209,7 +192,7 @@ function removeApp($userName, $appId) {
 }
 
 /**
- * {@inheritDoc}
+ * 移除分区
  */
 function removeRegion($appId, $regionId) {
 	global $config, $server, $redis;
@@ -239,7 +222,7 @@ function removeRegion($appId, $regionId) {
 }
 
 /**
- * {@inheritDoc}
+ * 移除服务器
  */
 function removeServer($regionId, $serverId) {
 	global $config, $server, $redis;
@@ -270,7 +253,7 @@ function removeServer($regionId, $serverId) {
 }
 
 /**
- * {@inheritDoc}
+ * 移除进程
  */
 function removeProcess($serverId, $processId) {
 	global $config, $server, $redis;
@@ -294,22 +277,16 @@ function removeProcess($serverId, $processId) {
 
 /**
  * 更新应用相关信息配置
- * 
- * @param channel
- * @param appId
- * @param appName
- * @param order
- * @return
  */
 function updateApp($userName, $appId, $appName, $order) {
 	global $config, $server, $redis;
 	$map = array ();
 	$code = 1;
-	$key = CONFIG_APP.$appId;
+	$key = CONFIG_APP . $appId;
 	// 验证是否存在应用
 	if ($redis->exists($key)) {
-		$parent = $redis->hget($key,"parent");
-		if($parent==$userName){
+		$parent = $redis->hget($key, "parent");
+		if ($parent == $userName) {
 			// 名称保存不变,只是修改序号
 			$redis->hset($key, "order", $order);
 			$redis->hset($key, "name", $appName);
@@ -324,27 +301,21 @@ function updateApp($userName, $appId, $appName, $order) {
 
 /**
  * 更新应用相关信息配置
- * 
- * @param channel
- * @param appId
- * @param appName
- * @param order
- * @return
  */
 function updateRegion($appId, $regionId, $regionName, $order, $forbiddenType, $forbiddenValue) {
 	global $config, $server, $redis;
 	$map = array ();
 	$code = 1;
-	$key = CONFIG_REGION.$regionId;
-	if($redis->exists($key)){
-		$parent = $redis->hget($key,"parent");
-		if($parent==$appId){
+	$key = CONFIG_REGION . $regionId;
+	if ($redis->exists($key)) {
+		$parent = $redis->hget($key, "parent");
+		if ($parent == $appId) {
 			$redis->hset($key, "name", $regionName);
 			$redis->hset($key, "order", $order);
 			$redis->hset($key, "forbiddenType", $forbiddenType);
 			$redis->hset($key, "forbiddenValue", $forbiddenValue);
-		}		
-	}else{
+		}
+	} else {
 		$code = 0;
 	}
 	$map["code"] = $code;
@@ -353,21 +324,15 @@ function updateRegion($appId, $regionId, $regionName, $order, $forbiddenType, $f
 
 /**
  * 更新应用相关信息配置
- * 
- * @param channel
- * @param appId
- * @param appName
- * @param order
- * @return
  */
 function updateServer($regionId, $serverId, $serverName, $order, $forbiddenType, $forbiddenValue, $version, $status) {
 	global $config, $server, $redis;
 	$map = array ();
 	$code = 1;
-	$key = CONFIG_SERVER.$serverId;
-	if($redis->exists($key)){
-		$parent = $redis->hget($key,"parent");
-		if($parent==$regionId){
+	$key = CONFIG_SERVER . $serverId;
+	if ($redis->exists($key)) {
+		$parent = $redis->hget($key, "parent");
+		if ($parent == $regionId) {
 			$redis->hset($key, "name", $serverName);
 			$redis->hset($key, "version", $version);
 			$redis->hset($key, "status", $status);
@@ -375,7 +340,7 @@ function updateServer($regionId, $serverId, $serverName, $order, $forbiddenType,
 			$redis->hset($key, "forbiddenType", $forbiddenType);
 			$redis->hset($key, "forbiddenValue", $forbiddenValue);
 		}
-	}else{
+	} else {
 		$code = 0;
 	}
 	$map["code"] = $code;
@@ -384,43 +349,33 @@ function updateServer($regionId, $serverId, $serverName, $order, $forbiddenType,
 
 /**
  * 更新进程相关信息
- * 
- * @param channel
- * @param sid
- * @param pid
- * @param json
- * @return
  */
 function updateProcess($sid, $pid, $json) {
 	global $config, $server, $redis;
 	$map = array ();
-	$key = CONFIG_PROCESS.$pid;
-	if($redis->exists($key)){
-		$parent = $redis->hget($key,"parent");
-		if($parent==$sid){
+	$key = CONFIG_PROCESS . $pid;
+	if ($redis->exists($key)) {
+		$parent = $redis->hget($key, "parent");
+		if ($parent == $sid) {
 			try {
 				$jsonObject = json_decode($json, true);
 				unset ($jsonObject["id"]);
 				unset ($jsonObject["parent"]);
 				$redis->hmset($key, json_encode($jsonObject));
-			}catch(Exception $e){
-				
+			} catch (Exception $e) {
+
 			}
 		}
-	}else{
+	} else {
 		$code = 0;
 	}
-	
+
 	$map["code"] = 1;
 	return $map;
 }
 
 /**
  * 加载用户信息
- * 
- * @param userName
- * @param password
- * @return
  */
 function loadUser($userName, $password) {
 	global $config, $server, $redis;
@@ -530,6 +485,7 @@ function load_process($server_id) {
 
 	return $target;
 }
+
 
 /**
  * 加载分区下的服务器列表

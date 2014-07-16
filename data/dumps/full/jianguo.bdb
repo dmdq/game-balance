@@ -1,0 +1,257 @@
+{
+	"user"	:	"jianguo",
+	"password"	:	"jianguo",
+	"apps"	:	[
+		{
+			"name"	:	"忍者传奇",
+			"order"	:	0,
+			"forbiddenType"	:	0,
+			"forbiddenValue":	"",
+			"regions"	:	[
+				{
+					"id"	:	"88207efd-f4bb-4a08-b1fe-9716e3fe6ac8",
+					"name"	:	"IOS越狱专区",
+					"order"	: 0,
+					"forbiddenType"	:	0,
+					"forbiddenValue":	"",
+					"servers"	:	[
+						{
+							"id"	:	"351AAEA423ACCCF7F46C1D24F6279E06",
+							"name"	:	"6区 - 六道佩恩",
+							"order"	:	-6,
+							"status":	99,
+							"version"	: "http://hy.yxpai.com/resources/json/version_android_yxpai_2.json",
+							"forbiddenType"	:	1,
+							"forbiddenValue":	"101.85.203.57,116.226.35.195,101.231.71.198,220.112.200.73,116.226.51.*,116.226.84.*",
+							"processes"	:	[
+								{
+									"order"	:	1,
+									"host"	:	"114.215.204.225",
+									"port"	:	2860,
+									"online":	0,
+									"usedMemory"	: 0
+								}
+							]
+						},
+						{
+							"id"	:	"2AB96DD49CDC83D5E193C3B4B527661D",
+							"name"	:	"5区 - 预言之子",
+							"order"	:	-5,
+							"status":	99,
+							"version"	: "http://hy.yxpai.com/resources/json/version_ios_unofficial_5.json",
+							"forbiddenType"	:	0,
+							"forbiddenValue":	"",
+							"processes"	:	[
+								{
+									"order"	:	1,
+									"host"	:	"121.41.128.32",
+									"port"	:	10005,
+									"online":	0,
+									"usedMemory"	: 0
+								}
+							]
+						},
+						{
+							"id"	:	"5EAC8BF09538B5FA61725ADEBC82EA68",
+							"name"	:	"4区 - 金色闪光",
+							"order"	:	-4,
+							"status":	103,
+							"version"	: "http://hy.yxpai.com/resources/json/version_ios_unofficial_4.json",
+							"forbiddenType"	:	0,
+							"forbiddenValue":	"",
+							"processes"	:	[
+								{
+									"order"	:	1,
+									"host"	:	"121.41.128.32",
+									"port"	:	10004,
+									"online":	0,
+									"usedMemory"	: 0
+								}
+							]
+						},
+						{
+							"id"	:	"bac2f61d-d1d9-45f2-b274-49d62c386ace",
+							"name"	:	"3区 - 木叶旋风",
+							"order"	:	-3,
+							"status":	103,
+							"version"	: "http://hy.yxpai.com/resources/json/version_ios_unofficial_3.json",
+							"forbiddenType"	:	0,
+							"forbiddenValue":	"",
+							"processes"	:	[
+								{
+									"order"	:	1,
+									"host"	:	"115.29.241.55",
+									"port"	:	5860,
+									"online":	0,
+									"usedMemory"	: 0
+								}
+							]
+						},
+						{
+							"id"	:	"47a08d07-7add-456f-97e9-5de37cf29ec3",
+							"name"	:	"2区 - 究极风暴",
+							"order"	:	-2,
+							"status":	103,
+							"version"	: "http://hy.yxpai.com/resources/json/version_ios_unofficial_2.json",
+							"forbiddenType"	:	0,
+							"forbiddenValue":	"",
+							"processes"	:	[
+								{
+									"order"	:	1,
+									"host"	:	"115.29.241.55",
+									"port"	:	4860,
+									"online":	0,
+									"usedMemory"	: 0
+								}
+							]
+						},
+						{
+							"id"	:	"aba58e82-9137-4c9a-83be-8f6741db4a00",
+							"name"	:	"1区 - 忍者传奇",
+							"order"	:	-1,
+							"status":	103,
+							"version"	: "http://hy.yxpai.com/resources/json/version_ios_unofficial_1.json",
+							"forbiddenType"	:	0,
+							"forbiddenValue":	"",
+							"processes"	:	[
+								{
+									"order"	:	1,
+									"host"	:	"121.199.13.143",
+									"port"	:	3860,
+									"online":	0,
+									"usedMemory"	: 0
+								}
+							]
+						},
+						{
+							"id"	:	"19285B557C85C21D515F2556345B36E2",
+							"name"	:	"T3 - 内网开发2",
+							"order"	:	1,
+							"status":	99,
+							"version"	: "http://192.168.1.200/resources/json/version_rzcs_2014_01_21.json",
+							"forbiddenType"	:	1,
+							"forbiddenValue":	"180.173.35.*,116.226.32.*,101.231.71.*,116.226.59.*,116.226.68.*,116.226.51.*",
+							"processes"	:	[
+								{
+									"order"	:	1,
+									"host"	:	"116.226.51.163",
+									"port"	:	2860,
+									"online":	0,
+									"usedMemory"	: 0
+								}
+							]
+						},
+						{
+							"id"	:	"f0c722b4-5224-425a-ba20-e1542938b13b",
+							"name"	:	"T2 - 内网开发1",
+							"order"	:	2,
+							"status":	99,
+							"version"	: "http://192.168.1.200/resources/json/version_rzcs_2014_01_21.json",
+							"forbiddenType"	:	1,
+							"forbiddenValue":	"180.173.35.*,116.226.32.*,101.231.71.*,116.226.59.*,116.226.68.*,116.226.51.*",
+							"processes"	:	[
+								{
+									"order"	:	1,
+									"host"	:	"116.226.51.163",
+									"port"	:	2860,
+									"online":	0,
+									"usedMemory"	: 0
+								}
+							]
+						},
+						{
+							"id"	:	"50BA0903FFEB2830792638FCD3954381",
+							"name"	:	"T1 - 内网测试",
+							"order"	:	3,
+							"status":	99,
+							"version"	: "http://192.168.1.200/resources/json/version_rzcs_2014_01_21.json",
+							"forbiddenType"	:	1,
+							"forbiddenValue":	"180.173.35.*,116.226.32.*,101.231.71.*,116.226.59.*,116.226.68.*,116.226.51.*",
+							"processes"	:	[
+								{
+									"order"	:	1,
+									"host"	:	"116.226.51.163",
+									"port"	:	2860,
+									"online":	0,
+									"usedMemory"	: 0
+								}
+							]
+						}
+					]
+				},
+				{
+					"id"	:	"70776E02799FDA4A165FAD86F35174D8",
+					"name"	:	"坚果运营",
+					"order"	: 2,
+					"forbiddenType"	:	0,
+					"forbiddenValue":	"",
+					"servers"	:	[
+						{
+							"id"	:	"E2B45CAE7DD4CB4080E0724547B79B71",
+							"name"	:	"1区 - 漩涡鸣人",
+							"order"	:	-1,
+							"status":	99,
+							"version"	: "http://hy.yxpai.com/resources/json/version_android_yxpai_1.json",
+							"forbiddenType"	:	0,
+							"forbiddenValue":	"",
+							"processes"	:	[
+								{
+									"order"	:	1,
+									"host"	:	"114.215.204.225",
+									"port"	:	1860,
+									"online":	0,
+									"usedMemory"	: 0
+								}
+							]
+						}
+					]
+				},
+				{
+					"id"	:	"691541BE84E6D27C4089AFB7FBD5D68E",
+					"name"	:	"坚果测试",
+					"order"	: 2,
+					"forbiddenType"	:	0,
+					"forbiddenValue":	"",
+					"servers"	:	[
+						{
+							"id"	:	"E2B45CAE7DD4CB4080E0724547B79B71",
+							"name"	:	"T1 - 测试专区",
+							"order"	:	-1,
+							"status":	99,
+							"version"	: "http://hy.yxpai.com/resources/json/version_android_yxpai_2.json",
+							"forbiddenType"	:	0,
+							"forbiddenValue":	"",
+							"processes"	:	[
+								{
+									"order"	:	1,
+									"host"	:	"114.215.204.225",
+									"port"	:	2860,
+									"online":	0,
+									"usedMemory"	: 0
+								}
+							]
+						},
+						{
+							"id"	:	"41A835C1D355924202C644972CA61B40",
+							"name"	:	"T2 - 内网测试",
+							"order"	:	0,
+							"status":	100,
+							"version"	: "http://192.168.1.200/resources/json/version_rzcs_2014_01_21.json",
+							"forbiddenType"	:	0,
+							"forbiddenValue":	"",
+							"processes"	:	[
+								{
+									"order"	:	1,
+									"host"	:	"192.168.1.200",
+									"port"	:	1861,
+									"online":	0,
+									"usedMemory"	: 0
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
